@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python
 
 import sys
 import os
@@ -152,13 +152,13 @@ def extract_isbn_from_pdf(filename, return_all=False):
             return check_isbns(isbns, "all")
 
         # Pdf only-pattern "XXXXXXXXXXXXX (PDF)" can be found many times (different versions)
-        pdf_only_pattern = ' *\( *pdf *\)'
+        pdf_only_pattern = r' *\( *pdf *\)'
 
         isbns = re.findall(isbn_pattern + pdf_only_pattern, text,
                            re.IGNORECASE)
 
         # If no ISBN "XXXXXXXXXXXXX (PDF)" matches, check without "(PDF)", for cases with probably only 1 ISBN
-        if isbns is None:
+        if not isbns:
             isbns = re.findall(isbn_pattern, text, re.IGNORECASE)
 
         # Check hits for valid ISBN, return last one (later version presumed to be last in the document)
